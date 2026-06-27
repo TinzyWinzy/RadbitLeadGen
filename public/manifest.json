@@ -1,0 +1,65 @@
+{
+  "name": "Tourism Intelligence OS",
+  "short_name": "Tourism OS",
+  "description": "Enterprise lead tracking, sales intelligence, and digital audit automation for Zimbabwe's tourism industry.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0f19",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/app_icon.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/app_icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/app_icon.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/app_icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": [
+    "business",
+    "productivity",
+    "travel"
+  ],
+  "shortcuts": [
+    {
+      "name": "Pipeline Dashboard",
+      "short_name": "Dashboard",
+      "url": "/?shortcut=dashboard",
+      "icons": [
+        {
+          "src": "/app_icon.jpg",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "CSV Lead Importer",
+      "short_name": "Importer",
+      "url": "/?shortcut=importer",
+      "icons": [
+        {
+          "src": "/app_icon.jpg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

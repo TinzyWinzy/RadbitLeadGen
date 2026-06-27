@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net (default deny catch-all)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global helper checking authentication
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // ID verification pattern to prevent resource poisoning
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_-]+$');
+    }
+
+    // Retrieve active logged in user profile
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    // Check if the current user profile has admin authorization role
+    function isAdmin() {
+      return isAuthenticated() && exists(/databases/$(database)/documents/users/$(request.auth.uid)) && getUserData().role == 'admin';
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Validation helper for User collection schema
+    function isValidUser(data) {
+      return data.uid is string && data.uid.size() <= 128
+        && data.email is string && data.email.size() <= 128
+        && data.name is string && data.name.size() <= 128
+        && data.role is string && (data.role == 'admin' || data.role == 'sales_agent')
+        && data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    // Validation helper for Lead collection schema
+    function isValidLead(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.companyName is string && data.companyName.size() <= 256
+        && data.status is string && data.status.size() <= 64
+        && data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    // Rules for users collection
+    match /users/{userId} {
+      allow get: if isAuthenticated() && isValidId(userId);
+      allow list: if isAuthenticated();
+      allow create: if isAuthenticated() && (request.auth.uid == userId) && isValidId(userId) && isValidUser(incoming());
+      allow update: if isAuthenticated() && (request.auth.uid == userId) && isValidId(userId) && isValidUser(incoming())
+        && incoming().role == existing().role; // Prevent privilege escalation self-assigned role changes
+    }
+
+    // Rules for leads collection
+    match /leads/{leadId} {
+      allow get: if isAuthenticated() && isValidId(leadId);
+      allow list: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidId(leadId) && isValidLead(incoming());
+      allow update: if isAuthenticated() && isValidId(leadId) && isValidLead(incoming())
+        && incoming().createdAt == existing().createdAt; // Immutability of creation timestamp
+      allow delete: if isAuthenticated() && isValidId(leadId) && isAdmin(); // Only admins can delete leads
+    }
+
+    // Rule for test connection validation
+    match /test/connection {
+      allow read, write: if true;
+    }
+  }
+}

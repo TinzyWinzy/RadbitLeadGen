@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Geometric Balance Theme Palette */
+  --color-slate-950: #0A0B0E;
+  --color-slate-900: #0F1115;
+  --color-slate-850: #111827;
+  --color-slate-800: #1E293B;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748B;
+  --color-slate-400: #94A3B8;
+  --color-slate-300: #CBD5E1;
+  --color-slate-200: #E2E8F0;
+  --color-slate-100: #F8FAFC;
+
+  --color-sky-400: #38BDF8;
+  --color-sky-500: #0EA5E9;
+  --color-sky-950: #082F49;
+
+  --color-emerald-400: #4ADE80;
+  --color-emerald-500: #22C55E;
+  --color-emerald-950: #064E3B;
+
+  --color-red-400: #EF4444;
+  --color-red-500: #DC2626;
+  --color-red-950: #450A0A;
+  
+  --color-amber-400: #F59E0B;
+  --color-amber-500: #D97706;
+  --color-amber-950: #451A03;
+}
+
+/* Custom scrollbar adjustments for our dense terminal look */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

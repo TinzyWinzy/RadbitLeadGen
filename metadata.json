@@ -1,0 +1,6 @@
+{
+  "name": "Tourism Intelligence OS",
+  "description": "Internal lead acquisition and sales acceleration PWA for Radbit Studios to ingest, audit, score, and manage tourism operator leads.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

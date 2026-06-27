@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Internal Radbit Studios user profile with authorization roles.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "sales_agent"] },
+        "name": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email", "role", "name", "createdAt"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "A tourism operator lead undergoing qualification and outreach pipeline.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "companyName": { "type": "string" },
+        "category": { "type": "string" },
+        "location": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "website": { "type": "string" },
+        "source": { "type": "string" },
+        "status": { "type": "string", "enum": ["NEW", "AUDITED", "CONTACTED", "REPLIED", "CALL BOOKED", "PROPOSAL SENT", "WON", "LOST"] },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "analysis": {
+          "type": "object",
+          "properties": {
+            "digitalScore": { "type": "number" },
+            "hasWebsite": { "type": "boolean" },
+            "hasBookingSystem": { "type": "boolean" },
+            "hasWhatsapp": { "type": "boolean" },
+            "mobileQuality": { "type": "string" },
+            "seoQuality": { "type": "string" },
+            "trustSignals": { "type": "string" },
+            "revenueOpportunities": { "type": "array" },
+            "recommendedOffer": { "type": "string" }
+          }
+        },
+        "sales": {
+          "type": "object",
+          "properties": {
+            "priorityScore": { "type": "number" },
+            "contacted": { "type": "boolean" },
+            "lastContactDate": { "type": "string" },
+            "nextFollowUp": { "type": "string" },
+            "estimatedValue": { "type": "number" }
+          }
+        }
+      },
+      "required": ["id", "companyName", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Radbit Studios internal team members and their access roles."
+    },
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Tourism operator leads, analysis reports, and pipeline tracking details."
+    }
+  }
+}
