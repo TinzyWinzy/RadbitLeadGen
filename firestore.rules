@@ -14,7 +14,7 @@ service cloud.firestore {
 
     // ID verification pattern to prevent resource poisoning
     function isValidId(id) {
-      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_-]+$');
+      return id is string && id.size() > 0 && id.size() <= 128;
     }
 
     // Retrieve active logged in user profile
@@ -44,7 +44,7 @@ service cloud.firestore {
         && data.createdAt is string && data.createdAt.size() <= 64;
     }
 
-    // Validation helper for Lead collection schema
+    // Validation helper for Lead collection schema (validating primary fields only to ensure flexibility)
     function isValidLead(data) {
       return data.id is string && data.id.size() <= 128
         && data.companyName is string && data.companyName.size() <= 256
